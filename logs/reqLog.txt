@@ -1,0 +1,2 @@
+20231016	21:12:20	dfa5319c-4146-4029-accc-e0bca4eadff5	OPTIONS	https://www.google.com.kh	/
+20231016	21:12:20	cc7a60fb-075b-4d38-8277-2679d6960c95	GET	https://www.google.com.kh	/

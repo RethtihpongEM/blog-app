@@ -1,13 +1,34 @@
-const logEvents = require("./logEvents")
+const express = require("express")
+const path = require("path")
+const {logger} = require("./middleware/logEvents")
+const errorHandler = require("./middleware/errorHandler")
+const app = express()
+const cors = require("cors")
+const PORT = process.env.PORT || 8080
 
-const EventEmitter = require("events")
+//generate req log
+app.use(logger)
 
-class MyEmitter extends EventEmitter { }
+const whitelist = ["http://127.0.0.1:3000","http://127.0.0.1:8080"]
+const corsOptions = {
+  origin: (origin,callback) => {
+    if(whitelist.indexOf(origin) !== -1 || !origin){
+      callback(null,true)
+    }else{
+      callback(new Error("Not allowed by CORS"))
+    }
+  },
+  optionsSuccessStatus:200
+}
 
-const myEmitter = new MyEmitter();
+app.use(cors(corsOptions))
 
-myEmitter.on('log', (msg) => {logEvents(msg)})
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
+app.use(express.static(path.join(__dirname,'/public')))
 
-setTimeout(() => {
-  myEmitter.emit('log', 'Log event emitted!')
-},2000)
+app.use(errorHandler)
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`)
+})
