@@ -9,7 +9,7 @@ const corsOptions = require("./config/corsOptions")
 const cookieParser = require("cookie-parser")
 const PORT = process.env.PORT || 8080
 const mongoose = require('mongoose')
-const connectDB = require('./config/dbConn')
+const connectDB = require('./config/dbConn');
 
 //Connect to MongoDB
 connectDB();
@@ -17,11 +17,8 @@ connectDB();
 //Generate all request Log
 app.use(logger)
 
-
+//Cors
 app.use(cors(corsOptions))
-
-
-app.use(express.urlencoded({extended: false}))
 
 //Built-in middleware for json
 app.use(express.json())
@@ -29,9 +26,26 @@ app.use(express.json())
 //Middleware for cookie
 app.use(cookieParser())
 
-app.use('/', (req,res) => {
-  res.send("This is the blog app api")
-})
+app.use(express.urlencoded({extended: false}))
+
+//static files
+app.use('/',express.static(path.join(__dirname,'/public')))
+
+//routes
+app.use('/', require('./routes/root'))
+app.use('/api/blogs', require('./routes/api/blogRoutes'))
+
+//handle 404
+app.all('*', (req, res) => {
+  res.status(404);
+  if (req.accepts('html')) {
+      res.sendFile(path.join(__dirname, 'views', '404.html'));
+  } else if (req.accepts('json')) {
+      res.json({ "error": "404 Not Found" });
+  } else {
+      res.type('txt').send("404 Not Found");
+  }
+});
 
 app.use(errorHandler)
 
