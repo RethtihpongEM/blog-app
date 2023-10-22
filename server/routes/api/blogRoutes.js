@@ -4,11 +4,7 @@ const blogsController = require("../../controllers/blogsController")
 
 router.route('/')
   .get(blogsController.getAllBlogs)
-  .post((req,res) => {
-    res.json({
-      message: "Insert a blog"
-    })
-  })
+  .post(blogsController.insertBlog)
   .delete((req,res) => {
     res.json({
       message: "Delete a blog"
@@ -22,11 +18,7 @@ router.route('/')
 
 
 router.route('/:id')
-  .get((req,res) => {
-    res.json({
-      id: req.params.id
-    })
-  })
+  .get(blogsController.getBlog)
 
 
 module.exports = router
