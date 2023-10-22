@@ -5,16 +5,8 @@ const blogsController = require("../../controllers/blogsController")
 router.route('/')
   .get(blogsController.getAllBlogs)
   .post(blogsController.insertBlog)
-  .delete((req,res) => {
-    res.json({
-      message: "Delete a blog"
-    })
-  })
-  .put((req,res) => {
-    res.json({
-      message: "Update blog"
-    })
-  })
+  .delete(blogsController.deleteBlog)
+  .put(blogsController.updateBlog)
 
 
 router.route('/:id')
