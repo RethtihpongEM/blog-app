@@ -13,6 +13,7 @@ const getAllBlogs = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ 'message': err.message });
   }
 };
 
@@ -47,6 +48,7 @@ const insertBlog = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ 'message': err.message });
   }
 };
 
@@ -64,6 +66,7 @@ const getBlog = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ 'message': err.message });
   }
 };
 
@@ -86,6 +89,7 @@ const updateBlog = async (req,res) => {
     })
   }catch(err){
     console.log(err)
+    res.status(500).json({ 'message': err.message });
   }
 }
 
@@ -104,6 +108,7 @@ const deleteBlog = async (req,res) => {
     })
   }catch(err){
     console.log(err)
+    res.status(500).json({ 'message': err.message });
   }
 }
 
