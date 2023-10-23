@@ -1,28 +1,55 @@
-const User = require("../model/User")
-const bcrypt = require("bcrypt")
+const User = require("../model/User");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const handleLogin = async (req,res) => {
-  const {email,password} = req.body
+require("dotenv").config();
+
+const handleLogin = async (req, res) => {
+  const { email, password } = req.body;
 
   //Check if the email exists
-  const foundUser = await User.findOne({email: email}).exec()
-  if(!foundUser){
+  const foundUser = await User.findOne({ email: email }).exec();
+  if (!foundUser) {
     return res.status(401).json({
-      message: "Incorrect email or password."
-    })
+      message: "Incorrect email or password.",
+    });
   }
 
-  const match = await bcrypt.compare(password,foundUser.password);
+  const match = await bcrypt.compare(password, foundUser.password);
 
-  if(match){
-    res.json({
-      message: `Login Success. User ${foundUser.firstName} ${foundUser.lastName} is logged in.`
-    })
-  }else{
+  if (match) {
+    //JWT
+    const accessToken = jwt.sign(
+      { "firstName": foundUser.firstName },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: '30s' }
+    );
+
+    const refreshToken = jwt.sign(
+      { "firstName": foundUser.firstName },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: '1d'}
+    );
+
+    foundUser.refreshToken = refreshToken;
+    const result = await foundUser.save();
+
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.json({accessToken})
+
+    // res.json({
+    //   message: `Login Success. User ${foundUser.firstName} ${foundUser.lastName} is logged in.`,
+    // });
+  } else {
     res.status(401).json({
-      message: "Incorrect email or password."
-    })
+      message: "Incorrect email or password.",
+    });
   }
-}
+};
 
-module.exports = {handleLogin}
+module.exports = { handleLogin };
