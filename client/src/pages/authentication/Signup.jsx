@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
-
+import { NavLink } from "react-router-dom";
 
 const onSubmit = async (values) => {
   console.log(values);
@@ -25,13 +25,16 @@ const SignupSchema = Yup.object().shape({
 
 export const Signup = () => {
   return (
-    <div className="flex min-h-full flex-col justify-center items-center sm:w-full sm:max-w-sm sm:mx-auto mt-[10px] text-white">
-      <div>
-        <div className="">
-          <h4 className="block font-sans text-2xl font-semibold leading-snug tracking-normal text-white antialiased">
+    <div className="flex min-h-full flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8 text-black">
+      <div className="flex justify-between align-middle items-center flex-col max-w-[900px] bg-white px-[35px] py-[12px] shadow-2xl rounded-3xl">
+        <div className="flex flex-col justify-center items-center">
+        <h4 className="block font-sans text-2xl text-[#2d2d2d] leading-snug tracking-normal font-semibold antialiased">
+            Welcome to Blog App
+          </h4>
+          <h4 className="block font-sans text-2xl text-[#2d2d2d] leading-snug tracking-normal font-semibold antialiased">
             Sign Up
           </h4>
-          <p className="mt-1 block font-sans text-base font-normal leading-relaxed text-white antialiased">
+          <p className="mt-1 block font-sans text-base leading-relaxed font-semibold text-blue-700 antialiased">
             Enter your details to register.
           </p>
         </div>
@@ -51,11 +54,11 @@ export const Signup = () => {
             <Form className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-[300px] lg:w-[500px]">
               <div className="mb-4 flex flex-col gap-3">
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label htmlFor="firstName">First Name</label>
+                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="firstName">First Name</label>
                   <Field
-                  id="firstName"
+                    id="firstName"
                     name="firstName"
-                    className="bg-transparent border border-white px-4 py-2 w-full rounded-md"
+                    className="bg-white border shadow-sm px-4 py-2 w-full rounded-md"
                   />
                   {errors.firstName && touched.firstName ? (
                     <span className="text-[12px] text-red-600">
@@ -66,11 +69,11 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label htmlFor="lastName">Last Name</label>
+                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="lastName">Last Name</label>
                   <Field
-                  id="lastName"
+                    id="lastName"
                     name="lastName"
-                    className="bg-transparent border border-white px-4 py-2 w-full rounded-md"
+                    className="bg-white border shadow-sm px-4 py-2 w-full rounded-md"
                   />
                   {errors.lastName && touched.lastName ? (
                     <span className="text-[12px] text-red-600">
@@ -81,11 +84,11 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label htmlFor="username">Username</label>
+                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="username">Username</label>
                   <Field
                     id="username"
                     name="username"
-                    className="bg-transparent border border-white px-4 py-2 w-full rounded-md"
+                    className="bg-white border shadow-sm px-4 py-2 w-full rounded-md"
                   />
                   {errors.username && touched.username ? (
                     <span className="text-[12px] text-red-600">
@@ -96,11 +99,11 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label htmlFor="email">Email </label>
+                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="email">Email </label>
                   <Field
                     id="email"
                     name="email"
-                    className="bg-transparent border border-white px-4 py-2 w-full rounded-md"
+                    className="bg-white border shadow-sm px-4 py-2 w-full rounded-md"
                   />
                   {errors.email && touched.email ? (
                     <span className="text-[12px] text-red-600">
@@ -111,11 +114,12 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label htmlFor="password">Password</label>
+                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="password">Password</label>
                   <Field
                     id="password"
                     name="password"
-                    className="bg-transparent border border-white px-4 py-2 w-full rounded-md"
+                    type="password"
+                    className="bg-white border shadow-sm px-4 py-2 w-full rounded-md"
                   />
                   {errors.password && touched.password ? (
                     <span className="text-[12px] text-red-600">
@@ -126,11 +130,12 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label htmlFor="confPassword">Confirm Password</label>
+                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="confPassword">Confirm Password</label>
                   <Field
                     id="confPassword"
                     name="confPassword"
-                    className="bg-transparent border border-white px-4 py-2 w-full rounded-md"
+                    type="password"
+                    className="bg-white border shadow-sm px-4 py-2 w-full rounded-md"
                   />
                   {errors.confPassword && touched.confPassword ? (
                     <span className="text-[12px] text-red-600">
@@ -143,25 +148,25 @@ export const Signup = () => {
               </div>
 
               <button
-                className="mt-6 block w-full select-none rounded-lg bg-blue-700 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-700/20 transition-all hover:shadow-lg hover:shadow-blue-700/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                className={`mt-6 block w-full select-none rounded-lg bg-blue-700 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-700/20 transition-all hover:shadow-lg hover:shadow-blue-700/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none`}
                 type="submit"
                 data-ripple-light="true"
               >
                 Register
               </button>
-              <p className="mt-4 block text-center font-sans text-base font-normal leading-relaxed text-white antialiased">
+              <p className="mt-4 block text-center font-sans text-base font-normal leading-relaxed text-black antialiased">
                 Already have an account?
-                <a
-                  className="font-medium text-blue-700 transition-colors hover:text-blue-700"
-                  href="#"
+                <NavLink
+                  className="ml-1 font-medium text-blue-700 transition-colors hover:text-blue-900"
+                  to={`/login`}
                 >
-                  Sign In
-                </a>
+                  Log in
+                </NavLink>
               </p>
             </Form>
           )}
         </Formik>
       </div>
     </div>
-  )
+  );
 };
