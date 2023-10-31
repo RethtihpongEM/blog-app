@@ -2,8 +2,11 @@ import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { NavLink } from "react-router-dom";
 
+
+
 const onSubmit = async (values) => {
   console.log(values);
+  console.log(import.meta.env.VITE_API_URL)
 };
 
 const SignupSchema = Yup.object().shape({
