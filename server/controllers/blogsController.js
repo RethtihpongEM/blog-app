@@ -7,10 +7,7 @@ const getAllBlogs = async (req, res) => {
     if (blogs.length == 0) {
       return res.status(204).json({ message: "No blogs found." });
     }
-    res.json({
-      data: blogs,
-      total: blogs.length,
-    });
+    res.json(blogs);
   } catch (err) {
     console.log(err);
     res.status(500).json({ 'message': err.message });

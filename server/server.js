@@ -41,7 +41,7 @@ app.use("/auth", require("./routes/authRoutes"));
 app.use("/logout", require("./routes/logoutRoutes"));
 
 app.use("/refresh", require("./routes/refreshRoutes"));
-app.use(verifyJWT);
+// app.use(verifyJWT);
 app.use("/api/blogs", require("./routes/api/blogRoutes"));
 
 //handle 404

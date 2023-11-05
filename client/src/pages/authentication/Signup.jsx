@@ -2,11 +2,8 @@ import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { NavLink } from "react-router-dom";
 
-
-
 const onSubmit = async (values) => {
   console.log(values);
-  console.log(import.meta.env.VITE_API_URL)
 };
 
 const SignupSchema = Yup.object().shape({
@@ -31,7 +28,7 @@ export const Signup = () => {
     <div className="flex min-h-full flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8 text-black">
       <div className="flex justify-between align-middle items-center flex-col max-w-[900px] bg-white px-[35px] py-[12px] shadow-2xl rounded-3xl">
         <div className="flex flex-col justify-center items-center">
-        <h4 className="block font-sans text-2xl text-[#2d2d2d] leading-snug tracking-normal font-semibold antialiased">
+          <h4 className="block font-sans text-2xl text-[#2d2d2d] leading-snug tracking-normal font-semibold antialiased">
             Welcome to Blog App
           </h4>
           <h4 className="block font-sans text-2xl text-[#2d2d2d] leading-snug tracking-normal font-semibold antialiased">
@@ -57,7 +54,12 @@ export const Signup = () => {
             <Form className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-[300px] lg:w-[500px]">
               <div className="mb-4 flex flex-col gap-3">
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="firstName">First Name</label>
+                  <label
+                    className="text-[#2d2d2d] text-[16px]"
+                    htmlFor="firstName"
+                  >
+                    First Name
+                  </label>
                   <Field
                     id="firstName"
                     name="firstName"
@@ -72,7 +74,12 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="lastName">Last Name</label>
+                  <label
+                    className="text-[#2d2d2d] text-[16px]"
+                    htmlFor="lastName"
+                  >
+                    Last Name
+                  </label>
                   <Field
                     id="lastName"
                     name="lastName"
@@ -87,7 +94,12 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="username">Username</label>
+                  <label
+                    className="text-[#2d2d2d] text-[16px]"
+                    htmlFor="username"
+                  >
+                    Username
+                  </label>
                   <Field
                     id="username"
                     name="username"
@@ -102,7 +114,9 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="email">Email </label>
+                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="email">
+                    Email{" "}
+                  </label>
                   <Field
                     id="email"
                     name="email"
@@ -117,7 +131,12 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="password">Password</label>
+                  <label
+                    className="text-[#2d2d2d] text-[16px]"
+                    htmlFor="password"
+                  >
+                    Password
+                  </label>
                   <Field
                     id="password"
                     name="password"
@@ -133,7 +152,12 @@ export const Signup = () => {
                   )}
                 </div>
                 <div className="relative w-full min-w-[200px] flex-col gap-y-2 flex">
-                  <label className="text-[#2d2d2d] text-[16px]" htmlFor="confPassword">Confirm Password</label>
+                  <label
+                    className="text-[#2d2d2d] text-[16px]"
+                    htmlFor="confPassword"
+                  >
+                    Confirm Password
+                  </label>
                   <Field
                     id="confPassword"
                     name="confPassword"

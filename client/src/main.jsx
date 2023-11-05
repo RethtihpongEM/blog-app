@@ -4,12 +4,15 @@ import './index.css'
 import { ThemeProvider } from '@material-tailwind/react'
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
+import {BlogProvider} from './contexts/BlogContext'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider>
-      <RouterProvider router={router}/>
+      <BlogProvider>
+        <RouterProvider router={router}/>
+      </BlogProvider>
     </ThemeProvider>
   </React.StrictMode>,
 )
