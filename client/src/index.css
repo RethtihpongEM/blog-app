@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'JetBrainMonoRegular';
+  src: url('./assets/fonts/JetBrainsMono-Regular.woff2');
+}
+
+@font-face {
+  font-family: 'JetBrainMonoBold';
+  src: url('./assets/fonts/JetBrainsMono-Bold.woff2');
+}
