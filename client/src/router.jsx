@@ -1,26 +1,38 @@
-import {createBrowserRouter} from "react-router-dom"
-import { Signup } from "./pages/authentication/Signup"
-import { NotFoundPage } from "./pages/NotFoundPage"
-import { Login } from "./pages/authentication/Login"
-import { WelcomePage } from "./pages/Homepage"
+import { createBrowserRouter } from "react-router-dom";
+import { Signup } from "./pages/authentication/Signup";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { Login } from "./pages/authentication/Login";
+import { Homepage } from "./pages/Homepage";
+import { DefaultLayout } from "./layouts/DefaultLayout";
+import { SingleBlogPage } from "./pages/SingleBlogPage";
 
 const router = createBrowserRouter([
   {
     path: "/register",
-    element: <Signup/>
+    element: <Signup />,
   },
   {
     path: "/login",
-    element: <Login/>
+    element: <Login />,
   },
   {
     path: "/",
-    element: <WelcomePage/>
+    element: <DefaultLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Homepage/>,
+      },
+      {
+        path: "/blogs/:id",
+        element: <SingleBlogPage/>
+      },
+    ],
   },
   {
     path: "*",
-    element: <NotFoundPage/>
-  }
-])
+    element: <NotFoundPage />,
+  },
+]);
 
-export default router
+export default router;
