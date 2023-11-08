@@ -32,6 +32,7 @@ const insertBlog = async (req, res) => {
 
   const data = {
     title: req?.body?.title,
+    description: req?.body?.description,
     author: req?.body?.author,
     body: req?.body?.body,
   };
@@ -81,6 +82,7 @@ const updateBlog = async (req,res) => {
   //Get the doc that needs to be updated
   const data = {
     title: req?.body?.title,
+    description: req?.body?.description,
     author: req?.body?.author,
     body: req?.body?.body,
   };

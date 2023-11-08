@@ -8,7 +8,7 @@ export const BlogProvider = ({children}) => {
   const [blogs,setBlogs] = useState([])
 
   const getBlogs = async () => {
-    axiosClient.get('blogs').then((res) => {
+    await axiosClient.get('blogs').then((res) => {
       setBlogs(res.data)
     })
   }
