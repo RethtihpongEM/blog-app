@@ -6,10 +6,17 @@ const BlogContext = createContext();
 export const BlogProvider = ({children}) => {
 
   const [blogs,setBlogs] = useState([])
+  const [blog,setBlog] = useState({})
 
   const getBlogs = async () => {
     await axiosClient.get('blogs').then((res) => {
       setBlogs(res.data)
+    })
+  }
+
+  const getBlog = async (id) => {
+    await axiosClient.get(`blogs/${id}`).then((res) => {
+      setBlog(res.data)
     })
   }
   
@@ -17,10 +24,9 @@ export const BlogProvider = ({children}) => {
   return (
     <BlogContext.Provider value={{
         blogs,
-        getBlogs
-        // blogsQuery,
-        // blogsLoading,
-        // blogsQueryReFetch,
+        getBlogs,
+        blog,
+        getBlog
       }
     }>
       {children}

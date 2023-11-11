@@ -1,5 +1,4 @@
 import { BlogCard } from "../components/BlogCard";
-import blogData from "../../data/Blog.json";
 import { useContext, useEffect } from "react";
 import BlogContext from "../contexts/BlogContext";
 

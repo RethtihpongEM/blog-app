@@ -16,7 +16,7 @@ const verifyJWT = require("./middleware/verifyJWT");
 connectDB();
 
 //Generate all request Log
-app.use(logger);
+// app.use(logger);
 
 //Cors
 app.use(cors(corsOptions));

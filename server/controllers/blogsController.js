@@ -3,10 +3,6 @@ const multer = require("multer")
 const upload = multer({dest: '../storage/blogImages'})
 
 
-const uploadImage = async (req,res) => {
-  
-}
-
 //Get all blogs
 const getAllBlogs = async (req, res) => {
   try {
@@ -66,9 +62,7 @@ const getBlog = async (req, res) => {
     if (!blog) {
       return res.status(204).json({ message: "No blog matches ID" });
     }
-    res.json({
-      data: blog,
-    });
+    res.json(blog);
   } catch (err) {
     console.log(err);
     res.status(500).json({ 'message': err.message });
