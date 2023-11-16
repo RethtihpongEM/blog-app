@@ -1,38 +1,88 @@
+/* eslint-disable react/prop-types */
 import { createContext, useState } from "react";
 import axiosClient from "../axiosClient";
+import * as Yup from "yup";
+import { useQuery } from "@tanstack/react-query";
 
 const BlogContext = createContext();
 
-export const BlogProvider = ({children}) => {
+export const BlogProvider = ({ children }) => {
+  const [blog, setBlog] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(true);
 
-  const [blogs,setBlogs] = useState([])
-  const [blog,setBlog] = useState({})
+  //Blog schema for validation
+  const BlogSchema = Yup.object().shape({
+    title: Yup.string(),
+    description: Yup.string(),
+    body: Yup.string(),
+    author: Yup.string(),
+    date: Yup.string(),
+  });
 
-  const getBlogs = async () => {
-    await axiosClient.get('blogs').then((res) => {
-      setBlogs(res.data)
-    })
-  }
-
+  //Get Single Blog
   const getBlog = async (id) => {
+    setLoading(true);
+    //Set loading to true while waiting to fetch the data
     await axiosClient.get(`blogs/${id}`).then((res) => {
-      setBlog(res.data)
-    })
-  }
-  
+      setBlog(res.data);
+      setLoading(false);
+    });
+  };
+
+  //Get all blogs (react query)
+  const {
+    data: blogs,
+    isLoading: blogsLoading,
+    reFetch: blogsRefetch,
+    isError: blogsError,
+  } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: async () => {
+      return await axiosClient.get("blogs").then((res) => res.data);
+    },
+  });
+
+  const updateBlog = async (id, title, author = "Rethtihpong", body) => {
+    setIsSuccess(false);
+    setLoading(true);
+    await axiosClient
+      .put("blogs", {
+        id,
+        title,
+        author,
+        body,
+      })
+      .then(async () => {
+        await getBlog(id);
+        setIsSuccess(true);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
-    <BlogContext.Provider value={{
+    <BlogContext.Provider
+      value={{
         blogs,
-        getBlogs,
+        blogsLoading,
+        blogsRefetch,
+        blogsError,
         blog,
-        getBlog
-      }
-    }>
+        getBlog,
+        BlogSchema,
+        loading,
+        setLoading,
+        isSuccess,
+        setIsSuccess,
+        updateBlog
+      }}
+    >
       {children}
     </BlogContext.Provider>
-  )
+  );
+};
 
-}
-
-export default BlogContext
+export default BlogContext;

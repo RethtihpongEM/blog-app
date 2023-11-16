@@ -1,7 +1,4 @@
 const Blog = require("../model/Blog");
-const multer = require("multer")
-const upload = multer({dest: '../storage/blogImages'})
-
 
 //Get all blogs
 const getAllBlogs = async (req, res) => {

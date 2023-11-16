@@ -1,13 +1,22 @@
 import { NavLink, useParams } from "react-router-dom";
 import flowerVase from "../assets/small-plant-white-pot-is-sitting-white-surface_655090-81701-PhotoRoom.png-PhotoRoom.png";
+import moment from "moment";
+
 import { useContext, useEffect } from "react";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 import BlogContext from "../contexts/BlogContext";
 export const SingleBlogPage = () => {
-  const {id} = useParams()
-  const {blog, getBlog} = useContext(BlogContext)
+  const { id } = useParams();
+  const { blog, getBlog, loading } = useContext(BlogContext);
+  let localDate = moment(blog?.date).format("LLL");
   useEffect(() => {
-    getBlog(id)
-  },[])
+    getBlog(id);
+  }, []);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <div className="min-h-[300px] px-[25px] lg:px-[200px] md:px-[50px] mt-[25px] flex flex-col">
       <div className="flex md:gap-x-[50px] w-full mb-[50px] flex-col items-center md:flex-row lg:flex-row lg:items-start">
@@ -22,11 +31,11 @@ export const SingleBlogPage = () => {
               {blog?.author}
             </p>
             <p className="text-[16px] font-jetbrainMonoRegular text-[#9D9D9D]">
-              {blog?.date}
+              {localDate}
             </p>
             <div className="flex gap-x-[15px] mt-[15px]">
               <NavLink
-              to={`/blogs/update/${id}`}
+                to={`/blogs/update/${id}`}
                 className="px-6 py-2 bg-[#3DAAF9] font-jetbrainMonoRegular text-white rounded-[5px] transform  
     hover:-translate-y-1 hover:scale-[105%] transition duration-100 ease-in cursor-pointer"
               >
