@@ -2,10 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 import { Signup } from "./pages/authentication/Signup";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { Login } from "./pages/authentication/Login";
-import { Homepage } from "./pages/Homepage";
+import { Blogs } from "./pages/Blogs";
 import { DefaultLayout } from "./layouts/DefaultLayout";
 import { SingleBlogPage } from "./pages/SingleBlogPage";
 import { UpdateBlog } from "./pages/UpdateBlog";
+import { Homepage } from "./pages/Homepage";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Homepage/>,
+        element: <Homepage/>
+      },
+      {
+        path: "/blogs",
+        element: <Blogs/>,
       },
       {
         path: "/blogs/:id",

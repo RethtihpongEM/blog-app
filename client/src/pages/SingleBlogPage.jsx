@@ -6,7 +6,7 @@ import { useContext, useEffect } from "react";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import BlogContext from "../contexts/BlogContext";
 export const SingleBlogPage = () => {
-  const { id } = useParams();
+  const {id} = useParams()
   const { blog, getBlog, loading } = useContext(BlogContext);
   let localDate = moment(blog?.date).format("LLL");
   useEffect(() => {
