@@ -20,25 +20,28 @@ const handleLogin = async (req, res) => {
   if (match) {
     //JWT
     const accessToken = jwt.sign(
-      { "firstName": foundUser.firstName },
+      { "username": foundUser.username },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '30s' }
+      { expiresIn: '900s' }
     );
 
     const refreshToken = jwt.sign(
-      { "firstName": foundUser.firstName },
+      { "username": foundUser.username },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: '1d'}
     );
 
+    //add refresh token to user
     foundUser.refreshToken = refreshToken;
     const result = await foundUser.save();
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
+      sameSite: 'None',
       secure: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
+
 
     res.json({accessToken})
 

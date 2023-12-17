@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState } from "react";
-import axiosClient from "../axiosClient";
+import axiosClient from "../api/axiosClient";
 import * as Yup from "yup";
 import { useQuery } from "@tanstack/react-query";
 
@@ -24,7 +24,7 @@ export const BlogProvider = ({ children }) => {
   const getBlog = async (id) => {
     setLoading(true);
     //Set loading to true while waiting to fetch the data
-    await axiosClient.get(`blogs/${id}`).then((res) => {
+    await axiosClient.get(`api/blogs/${id}`).then((res) => {
       setBlog(res.data);
       setLoading(false);
     });
@@ -39,7 +39,7 @@ export const BlogProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      return await axiosClient.get("blogs").then((res) => res.data);
+      return await axiosClient.get("api/blogs").then((res) => res.data);
     },
   });
 
@@ -47,7 +47,7 @@ export const BlogProvider = ({ children }) => {
     setIsSuccess(false);
     setLoading(true);
     await axiosClient
-      .put("blogs", {
+      .put("api/blogs", {
         id,
         title,
         author,
@@ -63,7 +63,6 @@ export const BlogProvider = ({ children }) => {
       });
   };
 
-
   return (
     <BlogContext.Provider
       value={{
@@ -78,7 +77,7 @@ export const BlogProvider = ({ children }) => {
         setLoading,
         isSuccess,
         setIsSuccess,
-        updateBlog
+        updateBlog,
       }}
     >
       {children}

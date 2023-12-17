@@ -8,7 +8,7 @@ export const Navbar = () => {
   const submitSearch = (event) => {
     const { name, value } = event?.target;
     if (event.key === "Enter") {
-      navigate(`?${name}=${value}`);
+      navigate(`/blogs?d${name}=${value}`);
     }
   };
   return (
@@ -29,11 +29,11 @@ export const Navbar = () => {
         </NavLink>
       </div>
 
-      {location.pathname === "/blogs" && (
+      {location.pathname.includes("/blogs") && (
         <div className="flex items-center justify-between w-full">
           <button
             onClick={() => {
-              history.back();
+              history.back()
             }}
           >
             <svg

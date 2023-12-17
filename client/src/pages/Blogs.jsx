@@ -4,8 +4,12 @@ import BlogContext from "../contexts/BlogContext";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 
 export const Blogs = () => {
-  const { blogs, blogsLoading, blogsError } =
+  const { blogs, blogsLoading, blogsError, blogsRefetch } =
     useContext(BlogContext);
+
+  useEffect(() => {
+    blogsRefetch;
+  }, []);
 
   if (blogsLoading) {
     return (

@@ -10,13 +10,27 @@ const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 8080;
 const mongoose = require("mongoose");
 const connectDB = require("./config/dbConn");
-const verifyJWT = require("./middleware/verifyJWT");
+const {auth} = require('express-openid-connect')
+
+
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: 'a long, randomly-generated string stored in env',
+  baseURL: 'http://localhost:3000',
+  clientID: 'BeBHRKzCnFsmBwgsVodFFHAWXh7dC7hE',
+  issuerBaseURL: 'https://dev-2ixp1ggll72s1iqp.us.auth0.com'
+};
 
 //Connect to MongoDB
 connectDB();
 
 //Generate all request Log
-// app.use(logger);
+app.use(logger);
+
+app.use(auth(config));
+
+app.use(cors(corsOptions.credentials));
 
 //Cors
 app.use(cors(corsOptions));
@@ -38,10 +52,10 @@ app.use("/", require("./routes/root"));
 app.use("/register", require("./routes/registerRoutes"));
 
 app.use("/auth", require("./routes/authRoutes"));
-app.use("/logout", require("./routes/logoutRoutes"));
+app.use("/signout", require("./routes/logoutRoutes"));
+
 
 app.use("/refresh", require("./routes/refreshRoutes"));
-// app.use(verifyJWT);
 app.use("/api/blogs", require("./routes/api/blogRoutes"));
 
 //handle 404

@@ -1,29 +1,35 @@
-import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
+import { SignupSchema } from "../../schema/SignupSchema";
 import { NavLink } from "react-router-dom";
-
-const onSubmit = async (values) => {
-  console.log(values);
-};
-
-const SignupSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, "Too Short!")
-    .required("This field cannot be left blank."),
-  lastName: Yup.string()
-    .min(2, "Too Short!")
-    .required("This field cannot be left blank."),
-  username: Yup.string()
-    .min(2, "Too Short!")
-    .required("This field cannot be left blank."),
-  email: Yup.string()
-    .email("This value is not a valid email address.")
-    .required("This field cannot be left blank."),
-  password: Yup.string().required("Please enter a password."),
-  confPassword: Yup.string().required("Please re-enter your password."),
-});
+import axiosClient from "../../api/axiosClient";
+import {useNavigate} from "react-router-dom"
+import { useState } from "react";
 
 export const Signup = () => {
+
+  const [errorMessage, setErrorMessage] = useState("")
+
+  const navigate = useNavigate()
+
+  const handleResgister = async (values) => {
+    await axiosClient
+      .post("/register", {
+        firstName: values?.firstName,
+        lastName: values?.lastName,
+        username: values?.username,
+        email: values?.email,
+        password: values?.password,
+      })
+      .then(() => {
+        navigate('/login')
+      })
+      .catch((error) => {
+        console.log(error);
+        if(error.response.status === 409){
+          setErrorMessage(error.response.data.message)
+        }
+      });
+  };
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center items-center px-6 py-12 lg:px-8 text-black">
       <div className="flex justify-between align-middle items-center flex-col max-w-[900px] bg-white px-[35px] py-[12px] shadow-2xl rounded-3xl">
@@ -48,7 +54,7 @@ export const Signup = () => {
             confPassword: "",
           }}
           validationSchema={SignupSchema}
-          onSubmit={(values) => onSubmit(values)}
+          onSubmit={(values) => handleResgister(values)}
         >
           {({ errors, touched }) => (
             <Form className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-[300px] lg:w-[500px]">
@@ -173,7 +179,9 @@ export const Signup = () => {
                   )}
                 </div>
               </div>
-
+              {
+                errorMessage && <span className="text-sm text-red-500 text-center">{errorMessage}</span>
+              }
               <button
                 className={`mt-6 block w-full select-none rounded-lg bg-blue-700 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-700/20 transition-all hover:shadow-lg hover:shadow-blue-700/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none`}
                 type="submit"
