@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState } from "react";
 import axiosClient from "../api/axiosClient";
-import * as Yup from "yup";
 import { useQuery } from "@tanstack/react-query";
+import { BlogSchema } from "../schema/BlogSchema";
+
 
 const BlogContext = createContext();
 
@@ -10,15 +11,6 @@ export const BlogProvider = ({ children }) => {
   const [blog, setBlog] = useState({});
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
-
-  //Blog schema for validation
-  const BlogSchema = Yup.object().shape({
-    title: Yup.string(),
-    description: Yup.string(),
-    body: Yup.string(),
-    author: Yup.string(),
-    date: Yup.string(),
-  });
 
   //Get Single Blog
   const getBlog = async (id) => {
@@ -30,11 +22,11 @@ export const BlogProvider = ({ children }) => {
     });
   };
 
+
   //Get all blogs (react query)
   const {
     data: blogs,
     isLoading: blogsLoading,
-    reFetch: blogsRefetch,
     isError: blogsError,
   } = useQuery({
     queryKey: ["blogs"],
@@ -43,7 +35,9 @@ export const BlogProvider = ({ children }) => {
     },
   });
 
-  const updateBlog = async (id, title, author = "Rethtihpong", body) => {
+
+  const updateBlog = async (id, title, author, body) => {
+    console.log(id,title,author,body)
     setIsSuccess(false);
     setLoading(true);
     await axiosClient
@@ -68,7 +62,6 @@ export const BlogProvider = ({ children }) => {
       value={{
         blogs,
         blogsLoading,
-        blogsRefetch,
         blogsError,
         blog,
         getBlog,

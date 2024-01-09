@@ -8,9 +8,9 @@ const verifyJWT = require("../../middleware/verifyJWT")
 
 router.route('/')
   .get(blogsController.getAllBlogs)
-  .post(verifyJWT, blogsController.insertBlog)
-  .delete(verifyJWT,blogsController.deleteBlog)
-  .put(verifyJWT,blogsController.updateBlog)
+  .post(blogsController.insertBlog)
+  .delete(blogsController.deleteBlog)
+  .put(blogsController.updateBlog)
 
 
 router.route('/:id')

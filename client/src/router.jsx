@@ -6,7 +6,6 @@ import { Blogs } from "./pages/Blogs";
 import { DefaultLayout } from "./layouts/DefaultLayout";
 import { SingleBlogPage } from "./pages/SingleBlogPage";
 import { UpdateBlog } from "./pages/UpdateBlog";
-import { Homepage } from "./pages/Homepage";
 
 const router = createBrowserRouter([
   {
@@ -23,10 +22,6 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Homepage/>
-      },
-      {
-        path: "/blogs",
         element: <Blogs/>,
       },
       {
