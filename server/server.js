@@ -30,8 +30,6 @@ app.use(logger);
 
 app.use(auth(config));
 
-app.use(cors(corsOptions.credentials));
-
 //Cors
 app.use(cors(corsOptions));
 

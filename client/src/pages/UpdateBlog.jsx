@@ -33,11 +33,10 @@ export const UpdateBlog = () => {
   }
 
   const onSubmit = async (values) => {
-    console.log("clicked");
     try {
       await updateBlogMutation(values);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 

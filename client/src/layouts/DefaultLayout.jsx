@@ -6,7 +6,7 @@ export const DefaultLayout = () => {
   return (
     <>
       <Navbar />
-      <Outlet/>
+      <Outlet />
       <Footer />
     </>
   );

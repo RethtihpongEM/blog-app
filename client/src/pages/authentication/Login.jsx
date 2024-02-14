@@ -2,29 +2,39 @@ import { Formik, Form, Field } from "formik";
 import { NavLink } from "react-router-dom";
 import { LoginSchema } from "../../schema/LoginSchema";
 import axiosClient from "../../api/axiosClient";
-import { useContext, useState } from "react";
-import AuthContext from "../../contexts/AuthContext";
+import { useState } from "react";
+import {useNavigate,useLocation} from "react-router-dom"
+import useAuth from "../../hooks/useAuth";
 
 export const Login = () => {
 
-  const {setAuth} = useContext(AuthContext)
+  const navigate = useNavigate()
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const {setAuth} = useAuth()
 
   const [error,setError] = useState('')
 
   const handleLogin = async (values) => {
+    const email = values.email
+    const password = values.password
     await axiosClient
-      .post("auth", {
-        email: values.email,
-        password: values.password,
+      .post("auth", (JSON.stringify({email,password})),{
+        headers: {'Content-Type': 'application/json'},
+        withCredentials: true
       })
       .then((response) => {
-        console.log(response?.data)
-        // setAuth({
-
-        // })
+        const accessToken = response?.data?.accessToken
+        const user = response?.data?.user
+        setAuth({user, accessToken})
+        navigate(from, { replace: true });
       }).catch((error) =>{
         if(error.response.status === 401){
           setError(error.response.data.message)
+        }else if (error.response.status === 400){
+          setError('Please enter the email or password')
+        }else{
+          setError('Login Failed')
         }
       })
   };
@@ -76,6 +86,8 @@ export const Login = () => {
                     Password
                   </label>
                   <Field
+                  
+                  type="password"
                     id="password"
                     name="password"
                     className="bg-white border shadow-sm px-4 py-2 w-full rounded-md"

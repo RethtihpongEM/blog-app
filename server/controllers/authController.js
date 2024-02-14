@@ -19,10 +19,11 @@ const handleLogin = async (req, res) => {
 
   if (match) {
     //JWT
+    console.log(foundUser.username)
     const accessToken = jwt.sign(
       { "username": foundUser.username },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '900s' }
+      { expiresIn: '10s' }
     );
 
     const refreshToken = jwt.sign(
@@ -43,7 +44,7 @@ const handleLogin = async (req, res) => {
     });
 
 
-    res.json({accessToken})
+    res.json({user: result, accessToken})
 
     // res.json({
     //   message: `Login Success. User ${foundUser.firstName} ${foundUser.lastName} is logged in.`,

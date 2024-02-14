@@ -3,14 +3,17 @@ import { createContext, useState } from "react";
 import axiosClient from "../api/axiosClient";
 import { useQuery } from "@tanstack/react-query";
 import { BlogSchema } from "../schema/BlogSchema";
-
+import useAxiosPrivate from "../hooks/useAxiosPrivate"
 
 const BlogContext = createContext();
 
+
 export const BlogProvider = ({ children }) => {
+  const axiosPrivate = useAxiosPrivate()
   const [blog, setBlog] = useState({});
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(true);
+
 
   //Get Single Blog
   const getBlog = async (id) => {
@@ -37,10 +40,9 @@ export const BlogProvider = ({ children }) => {
 
 
   const updateBlog = async (id, title, author, body) => {
-    console.log(id,title,author,body)
     setIsSuccess(false);
     setLoading(true);
-    await axiosClient
+    await axiosPrivate
       .put("api/blogs", {
         id,
         title,
@@ -52,9 +54,11 @@ export const BlogProvider = ({ children }) => {
         setIsSuccess(true);
         setLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((error) => {
+        console.log(error);
+      }).finally(() =>{
+        setLoading(false)
+      })
   };
 
   return (
